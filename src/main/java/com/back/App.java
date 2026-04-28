@@ -10,8 +10,10 @@ public class App {
     }
 
     public void run() {
+        WiseSayingRepository wiseSayingRepository = new WiseSayingRepository();
+        WiseSayingService wiseSayingService = new WiseSayingService(wiseSayingRepository);
+        WiseSayingController wiseSayingController = new WiseSayingController(sc, wiseSayingService);
         SystemController systemController = new SystemController();
-        WiseSayingController wiseSayingController = new WiseSayingController(sc);
 
         System.out.println("== 명언 앱 ==");
 
@@ -33,6 +35,8 @@ public class App {
                 wiseSayingController.delete(rq);
             } else if (commandName.equals("수정")) {
                 wiseSayingController.modify(rq);
+            } else if (commandName.equals("빌드")) {
+                wiseSayingController.build(rq);
             }
         }
     }

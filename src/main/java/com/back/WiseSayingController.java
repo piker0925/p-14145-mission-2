@@ -5,10 +5,11 @@ import java.util.Scanner;
 
 public class WiseSayingController {
     private final Scanner sc;
-    private final WiseSayingService wiseSayingService = new WiseSayingService();
+    private final WiseSayingService wiseSayingService;
 
-    public WiseSayingController(Scanner sc) {
+    public WiseSayingController(Scanner sc, WiseSayingService wiseSayingService) {
         this.sc = sc;
+        this.wiseSayingService = wiseSayingService;
     }
 
     public void write() {
@@ -45,18 +46,22 @@ public class WiseSayingController {
         System.out.println("----------------------");
 
         System.out.print("페이지 : ");
-        for (int i = 1; i <= totalPages; i++) {
-            if (i == page) {
-                System.out.print("[" + i + "]");
-            } else {
-                System.out.print(i);
-            }
+        if (totalPages == 0) {
+            System.out.println("1");
+        } else {
+            for (int i = 1; i <= totalPages; i++) {
+                if (i == page) {
+                    System.out.print("[" + i + "]");
+                } else {
+                    System.out.print(i);
+                }
 
-            if (i < totalPages) {
-                System.out.print(" / ");
+                if (i < totalPages) {
+                    System.out.print(" / ");
+                }
             }
+            System.out.println();
         }
-        System.out.println();
     }
 
     public void delete(Rq rq) {
@@ -97,5 +102,10 @@ public class WiseSayingController {
         } else {
             System.out.println(id + "번 명언은 존재하지 않습니다.");
         }
+    }
+
+    public void build(Rq rq) {
+        wiseSayingService.build();
+        System.out.println("data.json 파일의 내용이 갱신되었습니다.");
     }
 }
